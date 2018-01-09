@@ -14,6 +14,8 @@ namespace Metro.App
             CreateMap<StationDtoImp, Station>();
             CreateMap<StationDtoExpJson, Station>();
             CreateMap<StationDtoExpXml, Station>();
+
+            CreateMap<RouteDtoImp, Route>();
         }
     }
 }

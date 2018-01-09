@@ -24,10 +24,14 @@ namespace Metro.Data
         }
 
         public DbSet<Station> Stations { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Point> Points { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new StationConfiguration());
+            builder.ApplyConfiguration(new RouteConfiguration());
+            builder.ApplyConfiguration(new PointConfiguration());
         }
     }
 }

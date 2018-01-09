@@ -62,6 +62,63 @@ namespace Metro.DataProcessor
             return result;
         }
 
+
+        public static string ImportJsonRoutes(MetroDbContext context, string jsonString)
+        {
+            //Import Stations from JSON with DTO
+            StringBuilder sb = new StringBuilder();
+
+            var deserializedRoutes = JsonConvert.DeserializeObject(jsonString, typeof(rootDictionary));
+
+            var test = deserializedRoutes;
+            
+            //var deserializedRoutes = JsonConvert.DeserializeObject<RouteDtoImp[]>(jsonString);
+
+            var validRoutes = new List<Route>();
+
+            //foreach (var routeDto in deserializedRoutes)
+            //{
+            //    if (!IsValid(routeDto))
+            //    {
+            //        sb.AppendLine(FailureMessage);
+            //        continue;
+            //    }
+
+            //    var routeAlreadyExists = validRoutes.Any(s => s.RouteName == routeDto.RouteName);
+                
+            //    if (routeAlreadyExists)
+            //    {
+            //        sb.AppendLine(FailureMessage);
+            //        continue;
+            //    }
+
+            //    //var route = Mapper.Map<Route>(routeDto);
+
+            //    var route = new Route
+            //        {
+            //            Id = routeDto.Id,
+            //            RouteId = routeDto.RouteId,
+            //            Type = routeDto.Type,
+            //            RouteName = routeDto.RouteName,
+            //            LineId = routeDto.LineId,
+            //            ExtId = routeDto.ExtId,
+            //            LineName = routeDto.LineName
+            //        };
+
+            //    validRoutes.Add(route);
+
+            //    sb.AppendLine(string.Format(SuccessMessage, routeDto.RouteName));
+            //    //Console.WriteLine($"{stationDto.Name} {stationDto.Longitude} {stationDto.Latitude}");
+
+            //}
+
+            context.Routes.AddRange(validRoutes);
+            context.SaveChanges();
+
+            var result = sb.ToString();
+            return result;
+        }
+
         public static string ImportXmlStantions(MetroDbContext context, string xmlString)
         {
             // Import Stations from XML

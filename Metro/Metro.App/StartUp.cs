@@ -146,6 +146,15 @@ namespace Metro.App
             var stations = DataProcessor.Deserializer.ImportJsonStations(context, json);
             PrintAndExportEntityToFile(stations, exportDir + "Stations_JSON_Import_Log.txt");
 
+            using (var client = new WebClient())
+            {
+                json = client.DownloadString("http://drone.sumc.bg/api/v1/routes/changes");
+            }
+
+            var routes = DataProcessor.Deserializer.ImportJsonRoutes(context, json);
+            PrintAndExportEntityToFile(stations, exportDir + "Routes_JSON_Import_Log.txt");
+
+
             //var employees = DataProcessor.Deserializer.ImportEmployees(context, File.ReadAllText(baseDir + "employees.json"));
             //PrintAndExportEntityToFile(employees, exportDir + "Employees.txt");
 
