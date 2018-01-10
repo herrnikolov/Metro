@@ -142,8 +142,10 @@ namespace Metro.App
             {
                 json = client.DownloadString("http://drone.sumc.bg/api/v1/metro/all");
             }
-            
-            var stations = DataProcessor.Deserializer.ImportJsonStations(context, json);
+
+            //var stations = DataProcessor.Deserializer.ImportJsonStations(context, json);
+            var stations = DataProcessor.Deserializer.ImportJsonStations(context, File.ReadAllText(baseDir + "metro_stations.json"));
+
             PrintAndExportEntityToFile(stations, exportDir + "Stations_JSON_Import_Log.txt");
 
             using (var client = new WebClient())
@@ -151,7 +153,7 @@ namespace Metro.App
                 json = client.DownloadString("http://drone.sumc.bg/api/v1/routes/changes");
             }
 
-            var routes = DataProcessor.Deserializer.ImportJsonRoutes(context, json);
+            var routes = DataProcessor.Deserializer.ImportJsonRoutes(context, File.ReadAllText(baseDir + "routes.json"));
             PrintAndExportEntityToFile(stations, exportDir + "Routes_JSON_Import_Log.txt");
 
 

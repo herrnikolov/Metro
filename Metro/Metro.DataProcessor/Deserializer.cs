@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -68,49 +69,69 @@ namespace Metro.DataProcessor
             //Import Stations from JSON with DTO
             StringBuilder sb = new StringBuilder();
 
-            var deserializedRoutes = JsonConvert.DeserializeObject(jsonString, typeof(rootDictionary));
-
-            var test = deserializedRoutes;
-            
             //var deserializedRoutes = JsonConvert.DeserializeObject<RouteDtoImp[]>(jsonString);
+            var deserializedRoutes = JsonConvert.DeserializeObject<List<RouteDtoImp>>(jsonString);
 
             var validRoutes = new List<Route>();
 
-            //foreach (var routeDto in deserializedRoutes)
-            //{
-            //    if (!IsValid(routeDto))
-            //    {
-            //        sb.AppendLine(FailureMessage);
-            //        continue;
-            //    }
+            foreach (var routeDto in deserializedRoutes)
+            {
+                if (!IsValid(routeDto))
+                {
+                    sb.AppendLine(FailureMessage);
+                    continue;
+                }
 
-            //    var routeAlreadyExists = validRoutes.Any(s => s.RouteName == routeDto.RouteName);
-                
-            //    if (routeAlreadyExists)
-            //    {
-            //        sb.AppendLine(FailureMessage);
-            //        continue;
-            //    }
+                var routeAlreadyExists = validRoutes.Any(s => s.RouteName == routeDto.RouteName);
 
-            //    //var route = Mapper.Map<Route>(routeDto);
+                if (routeAlreadyExists)
+                {
+                    sb.AppendLine(FailureMessage);
+                    continue;
+                }
 
-            //    var route = new Route
-            //        {
-            //            Id = routeDto.Id,
-            //            RouteId = routeDto.RouteId,
-            //            Type = routeDto.Type,
-            //            RouteName = routeDto.RouteName,
-            //            LineId = routeDto.LineId,
-            //            ExtId = routeDto.ExtId,
-            //            LineName = routeDto.LineName
-            //        };
+                //var route = Mapper.Map<Route>(routeDto);
 
-            //    validRoutes.Add(route);
+                var impPoints = routeDto.Points;
 
-            //    sb.AppendLine(string.Format(SuccessMessage, routeDto.RouteName));
-            //    //Console.WriteLine($"{stationDto.Name} {stationDto.Longitude} {stationDto.Latitude}");
+                var validPoints = new List<Point>();
 
-            //}
+                foreach (var pointDtoImp in impPoints)
+                {
+                    var PointToAdd = new Point
+                        {
+                            stop = pointDtoImp.stop,
+                            StopCode = pointDtoImp.StopCode,
+                            StopName = pointDtoImp.StopName,
+                            Latitude = pointDtoImp.Latitude,
+                            Longitude = pointDtoImp.Longitude,
+                            VehicleType = pointDtoImp.VehicleType,
+                        };
+                    validPoints.Add(PointToAdd);
+
+                }
+
+
+                var route = new Route
+                {
+                    Id = routeDto.Id,
+                    RouteId = routeDto.RouteId,
+                    Type = routeDto.Type,
+                    RouteName = routeDto.RouteName,
+                    LineId = routeDto.LineId,
+                    ExtId = routeDto.ExtId,
+                    LineName = routeDto.LineName,
+                    Points = validPoints
+                };
+
+
+
+                validRoutes.Add(route);
+
+                sb.AppendLine(string.Format(SuccessMessage, routeDto.RouteName));
+                //Console.WriteLine($"{stationDto.Name} {stationDto.Longitude} {stationDto.Latitude}");
+
+            }
 
             context.Routes.AddRange(validRoutes);
             context.SaveChanges();

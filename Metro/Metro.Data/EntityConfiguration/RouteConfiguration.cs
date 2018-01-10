@@ -13,7 +13,6 @@
         public void Configure(EntityTypeBuilder<Route> builder)
         {
             builder.HasKey(r => r.Id);
-            
         }
     }
 }

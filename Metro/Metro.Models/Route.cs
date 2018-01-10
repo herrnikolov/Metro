@@ -24,5 +24,7 @@ namespace Metro.Models
 
         public ICollection<Point> Points { get; set; } = new List<Point>();
 
+        public ICollection<RouteStation> RouteStations { get; set; } = new List<RouteStation>();
+
     }
 }

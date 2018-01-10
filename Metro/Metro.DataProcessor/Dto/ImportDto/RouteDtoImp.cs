@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Metro.Models;
 using Newtonsoft.Json;
 
 namespace Metro.DataProcessor.Dto.ImportDto
 {
-    public class rootDictionary
-    {
-        public Dictionary<string, SecondLevelList> root { get; set; }
-    }
-
-    public class SecondLevelList
-    {
-        public List<RouteDtoImp> data { get; set; }
-    }
-
     public class RouteDtoImp
     {
         [Key]
@@ -38,5 +29,8 @@ namespace Metro.DataProcessor.Dto.ImportDto
 
         [JsonProperty("line_name")]
         public int LineName { get; set; }
+
+        [JsonProperty("points")]
+        public ICollection<Point> Points { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace Metro.Models
 
         public decimal Longitude { get; set; }
 
+        public ICollection<RouteStation> RouteStations { get; set; } = new List<RouteStation>();
+
     }
 }
-
