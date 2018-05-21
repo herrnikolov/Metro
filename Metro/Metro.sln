@@ -3,13 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.App", "Metro.App\Metro.App.csproj", "{4D946D7E-642A-4DB3-9959-9F55C1F58D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metro.App", "Metro.App\Metro.App.csproj", "{4D946D7E-642A-4DB3-9959-9F55C1F58D33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.Data", "Metro.Data\Metro.Data.csproj", "{811DDE82-5FFC-469D-846A-D08391E5F76A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metro.Data", "Metro.Data\Metro.Data.csproj", "{811DDE82-5FFC-469D-846A-D08391E5F76A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.DataProcessor", "Metro.DataProcessor\Metro.DataProcessor.csproj", "{EDA7C857-7F32-414F-A2CC-858876280CE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metro.DataProcessor", "Metro.DataProcessor\Metro.DataProcessor.csproj", "{EDA7C857-7F32-414F-A2CC-858876280CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metro.Models", "Metro.Models\Metro.Models.csproj", "{5B30F875-E9CF-4D73-8BF7-79E0E968B039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metro.Models", "Metro.Models\Metro.Models.csproj", "{5B30F875-E9CF-4D73-8BF7-79E0E968B039}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Datasets", "Datasets", "{6DF82318-4682-4363-B098-5B7E771E47FE}"
+	ProjectSection(SolutionItems) = preProject
+		Datasets\metro_stations.json = Datasets\metro_stations.json
+		Datasets\routes.json = Datasets\routes.json
+		Datasets\stations.xml = Datasets\stations.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original", "Original", "{05771A2F-9421-47A1-ACD6-10057F030AFF}"
+	ProjectSection(SolutionItems) = preProject
+		Datasets\Original\changes.json = Datasets\Original\changes.json
+		Datasets\Original\metro_stations.json = Datasets\Original\metro_stations.json
+		Datasets\Original\routes.json = Datasets\Original\routes.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +50,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05771A2F-9421-47A1-ACD6-10057F030AFF} = {6DF82318-4682-4363-B098-5B7E771E47FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6DE94F98-88FA-49A4-857F-3CDF3C15DF28}

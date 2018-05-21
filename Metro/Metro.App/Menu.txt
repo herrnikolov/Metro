@@ -10,5 +10,11 @@ Please, Selct Command:
 
 5 - Export XML Data
 
+6 - Show Stations
+
+7 - Show Routes
+
+8 - Show Points
+
 0 - Exit
-===============
+=====================

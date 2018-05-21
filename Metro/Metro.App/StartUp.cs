@@ -62,6 +62,15 @@ namespace Metro.App
                         case "5":
                             output = DbInitializer.ExportXmlData();
                             break;
+                        case "6":
+                            output = DbInitializer.ShowStations();
+                            break;
+                        case "7":
+                            output = DbInitializer.ShowRoutes();
+                            break;
+                        case "8":
+                            output = DbInitializer.ShowPoints();
+                            break;
                         default:
                             throw new InvalidOperationException("Invalid command!");
                     }
@@ -131,6 +140,37 @@ namespace Metro.App
                 }
                 return "XML Data Exported";
             }
+
+            internal static string ShowStations()
+            {
+                using (var db = new MetroDbContext())
+                {
+                    QueryStations(db);
+                }
+                Console.ReadKey();
+                return "Show Stations";
+            }
+
+            internal static string ShowRoutes()
+            {
+                using (var db = new MetroDbContext())
+                {
+                    QueryRoutes(db);
+                }
+                Console.ReadKey();
+                return "Show Routes";
+            }
+
+            internal static string ShowPoints()
+            {
+                using (var db = new MetroDbContext())
+                {
+                    QueryPoints(db);
+                }
+                Console.ReadKey();
+                return "Show Points";
+            }
+
         }
 
         public static void ImportEntitiesJson(MetroDbContext context, string baseDir = @"..\Datasets\")
@@ -198,6 +238,42 @@ namespace Metro.App
             var xmlOutput = DataProcessor.Serializer.ExportStantionXml(context);
             Console.WriteLine(xmlOutput);
             File.WriteAllText(exportDir + "Stations.xml", xmlOutput);
+        }
+        
+        private static void QueryStations(MetroDbContext context)
+        {
+            var stations = context.Stations;
+            Console.WriteLine($"Id | Code | Latitude  | Longitude | PId | RId | SId | Name");
+            Console.WriteLine($"----------------------------------------------------------");
+            foreach (var station in stations)
+            {
+                Console.WriteLine($"{station.Id.ToString("D2")} | {station.Code} | {station.Latitude} | {station.Longitude} | {station.PointId} | {station.RouteId.ToString("D3")} | {station.StantionId.ToString("D3")} | {station.Name}");
+            }
+        }
+
+        private static void QueryRoutes(MetroDbContext context)
+        {
+            var routes = context.Routes;
+            Console.WriteLine($"Id | Type| ExtId| RId  | LId | LName| Route Name");
+            Console.WriteLine($"----------------------------------------------------------");
+            foreach (var route in routes)
+            {
+                Console.WriteLine($"{route.Id.ToString("D2")} | {route.Type.ToString("D3")} | {route.ExtId.ToString("D2")} | {route.RouteId.ToString("D4")} | {route.LineId.ToString("D3")} | {route.LineName.ToString("D4")} | {route.RouteName}");
+            }
+        }
+
+        private static void QueryPoints(MetroDbContext context)
+        {
+            var points = context.Points;
+            Console.WriteLine($"Id | StopCode| VehicleType| Stop  | StopName");
+            Console.WriteLine($"----------------------------------------------------------");
+            foreach (var point in points)
+            {
+                if (point.StopCode != 0)
+                {
+                    Console.WriteLine($"{point.Id.ToString("D3")}|   {point.StopCode.ToString("D4")}  |      {point.VehicleType}      | {point.stop.ToString("D5")}| {point.StopName}");
+                }                
+            }
         }
 
         //private static void BonusTask(MetroDbContext context)
