@@ -29,7 +29,7 @@ namespace Metro.App
 
             //BonusTask(context);
 
-            string wellcome = File.ReadAllText("Menu.txt");
+            string wellcome = File.ReadAllText("..\\..\\..\\Menu.txt");
 
             while (true)
             {
@@ -173,9 +173,9 @@ namespace Metro.App
 
         }
 
-        public static void ImportEntitiesJson(MetroDbContext context, string baseDir = @"..\Datasets\")
+        public static void ImportEntitiesJson(MetroDbContext context, string baseDir = @"..\..\..\..\Datasets\")
         {
-            const string exportDir = "./ImportResults/";
+            const string exportDir = @"..\..\..\ImportResults\";
 
             string json;
             using (var client = new WebClient())
@@ -205,9 +205,9 @@ namespace Metro.App
             //PrintAndExportEntityToFile(orders, exportDir + "Orders.txt");
         }
 
-        public static void ImportEntitiesXml(MetroDbContext context, string baseDir = @"..\Datasets\")
+        public static void ImportEntitiesXml(MetroDbContext context, string baseDir = @"..\..\..\..\Datasets\")
         {
-            const string exportDir = "./ImportResults/";
+            const string exportDir = @"..\..\..\ImportResults\";
 
             var station = DataProcessor.Deserializer.ImportXmlStantions(context, File.ReadAllText(baseDir + "stations.xml"));
             PrintAndExportEntityToFile(station, exportDir + "Stations_XML_Import_Log.txt");
@@ -215,7 +215,7 @@ namespace Metro.App
 
         private static void ExportEntitiesJson(MetroDbContext context)
         {
-            const string exportDir = "./ExportResults/";
+            const string exportDir = @"..\..\..\ExportResults\";
 
             var jsonOutput = DataProcessor.Serializer.ExportStantionJson(context);
             Console.WriteLine(jsonOutput);
@@ -233,7 +233,7 @@ namespace Metro.App
 
         private static void ExportEntitiesXml(MetroDbContext context)
         {
-            const string exportDir = "./ExportResults/";
+            const string exportDir = @"..\..\..\ExportResults\";
 
             var xmlOutput = DataProcessor.Serializer.ExportStantionXml(context);
             Console.WriteLine(xmlOutput);
@@ -275,11 +275,6 @@ namespace Metro.App
                 }                
             }
         }
-
-        //private static void BonusTask(MetroDbContext context)
-        //{
-        //    var bonusOutput = DataProcessor.Bonus.UpdatePrice(context, "Cheeseburger", 6.50m);
-        //    Console.WriteLine(bonusOutput);
 
         private static void PrintAndExportEntityToFile(string entityOutput, string outputPath)
         {
